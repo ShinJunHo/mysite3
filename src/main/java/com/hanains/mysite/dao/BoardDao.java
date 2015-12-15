@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hanains.mysite.vo.BoardListVo;
@@ -16,6 +18,9 @@ import com.hanains.mysite.vo.BoardVo;
 
 @Repository
 public class BoardDao {
+	@Autowired
+	private SqlSession sqlSession;
+	
 	
 	private Connection getConnection()throws SQLException{
 		Connection connection = null;
@@ -32,6 +37,13 @@ public class BoardDao {
 		return connection;
 	}
 	//새로운 리스크 Vo를 생성해서 보여줌.
+	
+	public List<BoardListVo> getList(){
+		List<BoardListVo> list = sqlSession.selectList("board.list");
+		return list;
+	}
+	
+	/*
 	public List<BoardListVo> getList(){
 		List<BoardListVo> list = new ArrayList<BoardListVo>();
 		Connection conn=null;
@@ -92,6 +104,12 @@ public class BoardDao {
 		
 		return list;
 	}
+	*/
+	public void insert(BoardVo vo){
+		sqlSession.insert("board.insert",vo);
+		
+	}
+	/*
 	public void insert(BoardVo vo){
 		Connection conn =null;
 		PreparedStatement pstmt =null;
@@ -130,6 +148,13 @@ public class BoardDao {
 			}
 		}
 	}
+	*/
+	public BoardVo getView(Long no){
+		BoardVo vo = sqlSession.selectOne("board.getViewByNo",no);
+		sqlSession.update("board.updateViewCnt",no);
+		return vo;
+	}
+	/*
 	public BoardVo getView(Long no){
 		BoardVo viewVo=null;
 		Connection conn =null;
@@ -171,7 +196,11 @@ public class BoardDao {
 		}
 		
 		return viewVo;
+	}*/
+	public void delete(BoardVo vo){
+		sqlSession.delete("board.delete",vo);
 	}
+	/*
 	public void delete(BoardVo vo){
 		Connection conn = null;
 		PreparedStatement pstmt =null;
@@ -199,7 +228,11 @@ public class BoardDao {
 			}
 		}
 	}
-	
+	*/
+	public void update(BoardVo vo){
+		
+		sqlSession.update("board.updateContent",vo);
+	}/*
 	public void update(BoardVo vo){
 		Connection conn =null;
 		PreparedStatement pstmt =null;
@@ -235,5 +268,5 @@ public class BoardDao {
 				ex.printStackTrace();
 			}
 		}
-	}
+	}*/
 }

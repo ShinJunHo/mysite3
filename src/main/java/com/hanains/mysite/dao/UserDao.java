@@ -1,18 +1,26 @@
 package com.hanains.mysite.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import oracle.jdbc.pool.OracleDataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.hanains.mysite.exception.RepositoryException;
 import com.hanains.mysite.vo.UserVo;
 @Repository
 public class UserDao {
 	
+	
+	@Autowired
+	private OracleDataSource oracleDataSource;
+	
+	
+	@Autowired
+	private SqlSession sqlSession;
+	/*
 	private Connection getConnection() throws SQLException {
 		Connection connection = null;
 		
@@ -30,7 +38,23 @@ public class UserDao {
 		
 		return connection;
 	}
-	
+	*/
+	public UserVo get( UserVo vo){
+		//vo를 못 쓸땐. user.xml에서 parameter에 map
+		//Map<String,Object> map = new HashMap<String,Object>();
+	//	map.put("email",email);
+	//	map.put("password",password);
+		//UserVo userVo =sqlSession.selectOne("user.getByEmailAndPassword",map);
+
+		UserVo userVo =sqlSession.selectOne("user.getByEmailAndPassword",vo);
+
+		return userVo;
+	}
+	public UserVo get(Long no){
+		UserVo vo=sqlSession.selectOne("user.getByNo",no);
+		return vo;
+	}
+	/*
 	public UserVo get( String email, String password )throws RepositoryException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -40,7 +64,7 @@ public class UserDao {
 		
 		try{
 			//1. get Connection
-			conn = getConnection();
+			conn = oracleDataSource.getConnection();
 			
 			//2. prepare statement
 			String sql = 
@@ -90,15 +114,18 @@ public class UserDao {
 		}
 		
 		return vo;
+	}*/
+	public void insert( UserVo vo ){
+		sqlSession.insert("user.insert",vo);
 	}
-
+	/*
 	public void insert( UserVo vo ) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			//1. DB Connection
-			conn = getConnection();
+			conn = oracleDataSource.getConnection();
 			
 			//2. prepare statment
 			String sql = 
@@ -132,5 +159,5 @@ public class UserDao {
 				ex.printStackTrace();
 			}
 		}
-	}
+	}*/
 }

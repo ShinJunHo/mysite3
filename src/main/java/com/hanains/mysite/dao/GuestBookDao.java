@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hanains.mysite.vo.GuestBookVo;
@@ -16,6 +18,14 @@ import com.hanains.mysite.vo.GuestBookVo;
 public class GuestBookDao {
 	
 	
+	@Autowired
+	private SqlSession sqlSession;
+	
+	public List<GuestBookVo> getList(){
+		List<GuestBookVo> list = sqlSession.selectList("guestbook.list");
+		return list;
+	}
+	/*
 	public List<GuestBookVo> getList(){
 		List<GuestBookVo> list = new ArrayList<GuestBookVo>();
 		Connection connection = null;
@@ -32,7 +42,8 @@ public class GuestBookDao {
 			//3.statement 생성
 			stmt = connection.createStatement();
 			
-			String sql="select no, name, password, message, to_char(reg_date,'YYYY-MM-DD HH:MI:SS') from guestbook";
+			String sql="select no, name, password, message, to_char(reg_date,'YYYY-MM-DD HH:MI:SS') as regDate from guestbook";
+			//to_char 이거 그래도 mapping 못하니깐 alias를 줘야겠지.
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()){
@@ -79,7 +90,14 @@ public class GuestBookDao {
 			}
 		}
 		return list;
+	}*/
+	
+	public void insert(GuestBookVo vo){
+		
+		sqlSession.insert("guestbook.insert",vo);
+		
 	}
+	/*
 	public void insert(GuestBookVo vo){
 		Connection connection =null;
 		PreparedStatement pstmt=null;
@@ -120,6 +138,14 @@ public class GuestBookDao {
 			}
 		}
 	}
+	*/
+	
+	public void delete(GuestBookVo vo){
+		
+		sqlSession.delete("guestbook.delete",vo);
+		
+	}
+	/*
 	public void delete(GuestBookVo vo){
 		Connection connection = null;
 		PreparedStatement pstmt= null;
@@ -158,5 +184,5 @@ public class GuestBookDao {
 				ex.printStackTrace();
 			}
 		}
-	}
+	}*/
 }
