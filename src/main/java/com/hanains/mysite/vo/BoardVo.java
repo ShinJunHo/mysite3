@@ -4,9 +4,13 @@ public class BoardVo {
 	private Long no;
 	private String title;
 	private String content;
-	private Long member_no;
-	private Long view_cnt;
-	private String reg_date;
+	private Long memberNo;
+	private String memberName;
+	private Long viewCount;
+	private Long groupNo;
+	private Long orderNo;
+	private Long depth;
+	private String regDate;
 	public Long getNo() {
 		return no;
 	}
@@ -25,31 +29,55 @@ public class BoardVo {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Long getMember_no() {
-		return member_no;
+	public Long getMemberNo() {
+		return memberNo;
 	}
-	public void setMember_no(Long member_no) {
-		this.member_no = member_no;
+	public void setMemberNo(Long memberNo) {
+		this.memberNo = memberNo;
 	}
-	public Long getView_cnt() {
-		return view_cnt;
+	public String getMemberName() {
+		return memberName;
 	}
-	public void setView_cnt(Long view_cnt) {
-		this.view_cnt = view_cnt;
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
-	public String getReg_date() {
-		return reg_date;
+	public Long getViewCount() {
+		return viewCount;
 	}
-	public void setReg_date(String reg_date) {
-		this.reg_date = reg_date;
+	public void setViewCount(Long viewCount) {
+		this.viewCount = viewCount;
 	}
-	
-	
+	public Long getGroupNo() {
+		return groupNo;
+	}
+	public void setGroupNo(Long groupNo) {
+		this.groupNo = groupNo;
+	}
+	public Long getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(Long orderNo) {
+		this.orderNo = orderNo;
+	}
+	public Long getDepth() {
+		return depth;
+	}
+	public void setDepth(Long depth) {
+		this.depth = depth;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", content="
-				+ content + ", member_no=" + member_no + ", view_cnt="
-				+ view_cnt + ", reg_date=" + reg_date + "]";
+				+ content + ", memberNo=" + memberNo + ", memberName="
+				+ memberName + ", viewCount=" + viewCount + ", groupNo="
+				+ groupNo + ", orderNo=" + orderNo + ", depth=" + depth
+				+ ", regDate=" + regDate + "]";
 	}
 	
 	

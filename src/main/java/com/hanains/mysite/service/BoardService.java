@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hanains.mysite.dao.BoardDao;
-import com.hanains.mysite.vo.BoardListVo;
 import com.hanains.mysite.vo.BoardVo;
 
 @Service
@@ -15,7 +14,7 @@ public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
 	
-	public List<BoardListVo> getList(){
+	public List<BoardVo> getList(){
 		return boardDao.getList();
 	}
 	public void insert(BoardVo vo){

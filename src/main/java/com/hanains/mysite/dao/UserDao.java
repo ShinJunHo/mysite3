@@ -50,6 +50,10 @@ public class UserDao {
 
 		return userVo;
 	}
+	public UserVo get(String email){
+		UserVo vo =sqlSession.selectOne("user.selectByEmail",email);
+		return vo;
+	}
 	public UserVo get(Long no){
 		UserVo vo=sqlSession.selectOne("user.getByNo",no);
 		return vo;

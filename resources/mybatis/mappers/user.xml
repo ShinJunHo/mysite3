@@ -21,6 +21,12 @@
             select no, name, email from member where no = #{no}
         ]]>
     </select>
+    <!-- 기본타입은 내장되어있다. -->
+    <select id="selectByEmail" parameterType="string" resultType="UserVo">
+        <![CDATA[
+			select no, name, email,gender from member where email=#{email}
+        ]]>
+    </select>
     <!-- configuration 에서 alias 지정 -->
     <insert id="insert" parameterType="UserVo" >
         <![CDATA[

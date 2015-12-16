@@ -17,7 +17,7 @@
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/insert">
 					<!-- hidden value가 원래는 write였음. -->
-					<input type= "hidden" name="member_no" value="${authUser.no}">
+					<input type= "hidden" name="memberNo" value="${authUser.no}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>

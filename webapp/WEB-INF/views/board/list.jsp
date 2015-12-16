@@ -17,12 +17,10 @@
 	<div id="container">
 		<!--  JSTL 변경 부분. -->
 		<c:import url="/WEB-INF/views/include/header.jsp" />
-		<c:choose>
-			<c:when test="${not empty authUser }">
 				<div id="content">
 					<div id="board">
 						<form id="search_form" action="" method="post">
-							<input type="text" id="kwd" name="kwd" value=""> <input
+							<input type="text" id="kw" name="kw" value=""> <input
 								type="submit" value="찾기">
 						</form>
 						<table class="tbl-ex">
@@ -39,10 +37,17 @@
 								<tr>
 									<td>${count - status.index}</td>
 									<td><a href="${pageContext.request.contextPath}/board/view?no=${vo.no}">${vo.title}</a></td>
-									<td>${vo.name }</td>
-									<td>${vo.view_cnt}</td>
-									<td>${vo.reg_date}</td>
-									<td><a href="${pageContext.request.contextPath}/board/delete?no=${vo.no}" class="del">삭제</a></td>
+									<td>${vo.memberName }</td>
+									<td>${vo.viewCount}</td>
+									<td>${vo.regDate}</td>
+									<td>
+									<input type="text" value="${vo.memberNo}">
+									<input type="text" value="${authUser.no}">
+									<input type="text" value="${vo.memberNo eq authUser.no }">
+										<c:if test="${vo.memberNo eq authUser.no }">
+											<a href="${pageContext.request.contextPath}/board/delete?no=${vo.no}" class="del">삭제</a>
+										</c:if>
+									</td>
 								</tr>
 							</c:forEach>
 							
@@ -65,11 +70,6 @@
 						</div>
 					</div>
 				</div>
-			</c:when>
-			<c:otherwise>
-				<h1>로그인해주세요.</h1>
-			</c:otherwise>
-		</c:choose>
 		<!--  JSTL 변경 부분. -->
 		<c:import url="/WEB-INF/views/include/navigation.jsp">
 			<c:param name="menu" value="board"></c:param>

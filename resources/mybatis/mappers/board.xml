@@ -8,25 +8,24 @@
                     선언만 해놓는건 안됨.
     -->
     
-    <select id="list" resultType="com.hanains.mysite.vo.BoardListVo">
+    <select id="list" resultType="BoardVo">
         <![CDATA[
             select a.no, a.title, a.member_no, b.name 
-						as member_name, a.view_cnt, 
-						to_char(a.reg_date,'yyyy-mm-dd hh:mi:ss') as reg_date
+						as memberName, a.view_cnt as viewCount, 
+						to_char(a.reg_date,'yyyy-mm-dd hh:mi:ss') as regDate
 						from board a, member b 
 						where a.member_no = b.no 
 						order by a.reg_date desc
         ]]>
-        
     </select> 
  
     <insert id="insert" parameterType="BoardVo">
         <![CDATA[
         insert into board 
-        values( board_no_seq.nextval,#{title},#{content},#{member_no},0,sysdate)
+        values( board_no_seq.nextval,#{title},#{content},#{memberNo},0,nvl( ( select max( group_no ) from board ), 0) + 1,1,1,sysdate)
         ]]>
-        
     </insert>
+    
     <delete id="delete" parameterType="BoardVo">
         <![CDATA[
         delete from board where no = #{no}

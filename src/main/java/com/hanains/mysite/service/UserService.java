@@ -29,4 +29,8 @@ public class UserService {
 		return authUser;
 		//이렇게 하면 서비스가 됨.
 	}
+	public UserVo getUser(String email){
+		UserVo vo = userDao.get(email);
+		return vo;
+	}
 }
