@@ -1,15 +1,13 @@
 package com.hanains.mysite.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.hanains.mysite.vo.BoardVo;
 import com.hanains.mysite.vo.BoardVo;
 
 
@@ -43,8 +41,12 @@ public class BoardDao {
 		List<BoardVo> list =sqlSession.selectList("board.listByKeyword",kw);
 		return list;
 	}
-	public List<BoardVo> getSelectList(Long page){
-		List<BoardVo> list =sqlSession.selectList("board.selectlist",page);
+	public List<BoardVo> getSelectList(Long page,String keyword){
+		Map<String,Object> map =new HashMap<String,Object>();
+		map.put("page",page);
+		map.put("keyword",keyword);
+		System.out.println("\nDAO\npage:"+page+"keyword:"+keyword);
+		List<BoardVo> list =sqlSession.selectList("board.selectlist",map);
 		return list;
 	}
 	/*

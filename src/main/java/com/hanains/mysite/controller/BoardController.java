@@ -28,9 +28,11 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("/list")
-	public String list(@RequestParam(value="page",required=true,defaultValue="1")Long page,
+	public String list(	@RequestParam( value="keyword", required=true, defaultValue="" )String keyword,
+						@RequestParam( value="page", required=true, defaultValue="1" )Long page,
 					Model model){
-		Map<String,Object> list =boardService.getBoardList(page);
+		System.out.println("\npage:"+page+"keyword:"+keyword);
+		Map<String,Object> list =boardService.getBoardList(page,keyword);
 		model.addAttribute("list",list);
 		
 		return "/board/list";
@@ -139,13 +141,5 @@ public class BoardController {
 		return "/board/write";
 		
 	}
-	///////////search
-	@RequestMapping("/search")
-	public String search(@RequestParam("kw")String kw,Model model){
-		System.out.println("\nKW"+kw);
-		Map<String,Object> list = boardService.getListByKeyword(kw);
-		model.addAttribute("list",list);
-		
-		return "/board/list";
-	}
+
 }

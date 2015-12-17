@@ -17,30 +17,24 @@
 			order by a.reg_date desc
         ]]>
     </select> 
-    <select id="selectlist" resultType="BoardVo" parameterType="long">
+    <select id="selectlist" resultType="BoardVo" parameterType="map">
     	<![CDATA[
     		SELECT * 
 		  	FROM ( SELECT rownum as rnum, C.* 
 				   FROM ( SELECT A.no, A.title, A.member_no as memberNo, B.name as memberName, A.view_cnt as viewCount, A.depth, to_char( A.reg_date, 'yyyy-mm-dd hh:mi:ss' ) as regDate 
 						  FROM board A, member B
 						  WHERE A.member_no = B.no
+		]]>
+		<if test="keyword != ''">
+			<![CDATA[
+							AND ( A.title LIKE '%${keyword}%' OR A.content LIKE '%${keyword}%' )
+			]]>
+		</if>
+		<![CDATA[
 						  ORDER BY group_no DESC,  order_no  ASC ) C )
 	     	WHERE ( #{page } - 1 ) * 5  + 1 <= rnum AND rnum <=  #{page } * 5
     	]]>
     </select>
-    <select id="listByKeyword" resultType="BoardVo" parameterType="string">
-    	<![CDATA[
-    		SELECT *
-    		FROM ( SELECT rownum as rnum, C.*
-    				FROM ( SELECT A.no, A.title, A.member_no as memberNo, B.name as memberNAme, A.view_cnt as viewCount, A.depth, to_char( A.reg_date, 'yyyy-mm-dd hh:mi:ss' ) as regDate
-    					   FROM board A , member B
-    					   WHERE A.member_no = B.no
-    					   	AND	( A.title LIKE '%${kw}%' OR A.content LIKE '%${kw}%')
-    					   ORDER BY group_no DESC,  order_no  ASC ) C )
-	     	WHERE ( #{page } - 1 ) * 5  + 1 <= rnum AND rnum <=  #{page } * 5
-    	]]>
-    </select>
- 
     <insert id="insert" parameterType="BoardVo">
         <![CDATA[
         insert into board 

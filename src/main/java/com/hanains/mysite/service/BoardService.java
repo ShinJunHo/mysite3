@@ -20,7 +20,7 @@ public class BoardService {
 	
 	private final static long PAGE_GROUP_SIZE=4;
 	/*http://blog.naver.com/wldud_0729/150015317564*/
-	public Map<String,Object> getBoardList(Long page){
+	public Map<String,Object> getBoardList(Long page,String keyword){
 		
 		List<BoardVo> list =boardDao.getList();
 		if(page <= 0){
@@ -38,7 +38,7 @@ public class BoardService {
 				endRow = count;
 			}
 			//pagesize 넘기는 방법.
-			list = boardDao.getSelectList(currentPage);
+			list = boardDao.getSelectList(currentPage,keyword);
 		}else{
 			list =null;
 		}

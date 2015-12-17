@@ -19,8 +19,8 @@
 		<c:import url="/WEB-INF/views/include/header.jsp" />
 				<div id="content">
 					<div id="board">
-						<form id="search_form" action="/mysite3/board/search?kw=${kw}" method="post">
-							<input type="text" id="kw" name="kw" value=""> 
+						<form id="search_form" action="/mysite3/board/list" method="get">
+							<input type="text" id="keyword" name="keyword" value="${list.keyword }"> 
 							<input type="submit" value="찾기">
 						</form>
 						<table class="tbl-ex">
@@ -61,14 +61,14 @@
 								
 								<ul>
 									<c:if test="${list.numPageGroup > 1}">
-										<li class="pg-prev"><a href="/mysite3/board/list?page=${(list.numPageGroup-2)*list.pageGroupSize+1}">◀ 이전</a></li>	
+										<li class="pg-prev"><a href="/mysite3/board/list?page=${(list.numPageGroup-2)*list.pageGroupSize+1}&keyword=''">◀ 이전</a></li>	
 									</c:if>
 									
 									<c:forEach var="i" begin="${list.startPage}" end="${list.endPage}">
-										<li><a href="/mysite3/board/list?page=${i}">${i}</a></li>
+										<li><a href="/mysite3/board/list?page=${i}&keyword=''">${i}</a></li>
 									</c:forEach>
 									<c:if test="${list.numPageGroup < list.pageGroupCount }">
-										<li class="pg-next"><a href="/mysite3/board/list?page=${list.numPageGroup*list.pageGroupSize+1}">다음 ▶</a></li>
+										<li class="pg-next"><a href="/mysite3/board/list?page=${list.numPageGroup*list.pageGroupSize+1}&keyword=''">다음 ▶</a></li>
 									</c:if>
 								</ul>
 							</c:if>
