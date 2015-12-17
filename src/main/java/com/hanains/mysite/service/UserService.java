@@ -24,7 +24,7 @@ public class UserService {
 	//	UserVo authUser = userDao.get(vo.getEmail(), vo.getPassword());
 		UserVo authUser = userDao.get(vo);
 		
-		System.out.println(authUser);
+		System.out.println("login authUser"+authUser);
 		//toString override했으니깐.
 		return authUser;
 		//이렇게 하면 서비스가 됨.

@@ -17,6 +17,12 @@
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/insert">
 					<!-- hidden value가 원래는 write였음. -->
+					
+					<input type="hidden" name="groupNo" value="${board.groupNo}">
+					<input type="hidden" name="orderNo" value="${board.orderNo}">
+					<input type="hidden" name="depth" value="${board.depth }" >
+					
+					
 					<input type= "hidden" name="memberNo" value="${authUser.no}">
 					<table class="tbl-ex">
 						<tr>

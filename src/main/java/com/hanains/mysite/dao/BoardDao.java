@@ -39,7 +39,14 @@ public class BoardDao {
 		List<BoardVo> list = sqlSession.selectList("board.list");
 		return list;
 	}
-	
+	public List<BoardVo> getList(String kw){
+		List<BoardVo> list =sqlSession.selectList("board.listByKeyword",kw);
+		return list;
+	}
+	public List<BoardVo> getSelectList(Long page){
+		List<BoardVo> list =sqlSession.selectList("board.selectlist",page);
+		return list;
+	}
 	/*
 	public List<BoardListVo> getList(){
 		List<BoardListVo> list = new ArrayList<BoardListVo>();
@@ -103,6 +110,15 @@ public class BoardDao {
 	}
 	*/
 	public void insert(BoardVo vo){
+		Long groupNo = vo.getGroupNo();
+		System.out.println("\nreply"+groupNo);
+		if(groupNo != null){ // 답글인 경우
+			sqlSession.update("board.updateOrderNo",vo.getOrderNo());
+			sqlSession.insert("board.replyInsert",vo);
+			System.out.println("답글");
+			return ;
+		}
+		System.out.println("새글");
 		sqlSession.insert("board.insert",vo);
 		
 	}

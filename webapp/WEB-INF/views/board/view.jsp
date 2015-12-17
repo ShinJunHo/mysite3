@@ -42,8 +42,13 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath}/board/list">글목록</a> <a
-						href="${pageContext.request.contextPath}/board/modify?no=${board.no}">글수정</a>
+					<c:if test="${not empty authUser}">
+						<a href="${pageContext.request.contextPath}/board/reply?no=${board.no}">답글</a>
+					</c:if>
+					<a href="${pageContext.request.contextPath}/board/list">글목록</a> 
+					<c:if test="${not empty authUser }">
+						<a href="${pageContext.request.contextPath}/board/modify?no=${board.no}">글수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

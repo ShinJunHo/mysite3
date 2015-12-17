@@ -43,7 +43,7 @@ public class UserController {
 	
 		return "/user/loginform";
 	}
-	
+	/*
 	@RequestMapping("/login")
 	public String login(HttpSession session, @ModelAttribute UserVo vo){
 		
@@ -54,7 +54,8 @@ public class UserController {
 		
 		//login 후  main 으로 가는거니깐.
 		return "redirect:/";
-	}
+	}*/
+	/*
 	@RequestMapping("/logout")
 	public String logout(HttpSession session){
 		
@@ -63,6 +64,6 @@ public class UserController {
 		//intercept가 대신 해주게 되다 .
 		//Exception은컨트롤러기
 		return "redirect:/";
-	}
+	}*/
 	
 }

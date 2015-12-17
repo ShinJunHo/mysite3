@@ -1,6 +1,7 @@
 package com.hanains.mysite.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hanains.mysite.annotation.Auth;
+import com.hanains.mysite.annotation.AuthUser;
 import com.hanains.mysite.service.BoardService;
 import com.hanains.mysite.vo.BoardVo;
 import com.hanains.mysite.vo.UserVo;
@@ -24,19 +28,24 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("/list")
-	public String list(Model model){
-		List<BoardVo> list =boardService.getList();
+	public String list(@RequestParam(value="page",required=true,defaultValue="1")Long page,
+					Model model){
+		Map<String,Object> list =boardService.getBoardList(page);
 		model.addAttribute("list",list);
+		
 		return "/board/list";
 	}
 	//글쓰기 폼 요청.
+	@Auth
 	@RequestMapping("/write")
-	public String write(HttpSession session){
+	public String write(){
+		/* 인터셉터가 처리를 해주니깐 
 		//로그인 사용자 체크
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null){
 			return "redirect:/user/loginform";
 		}
+		*/
 		return "/board/write";
 	}
 	// 새글 등록 요청.
@@ -46,20 +55,25 @@ public class BoardController {
 		if(authUser == null ){
 			return "redirect:/user/loginform";
 		}
+		//이건 세션을 땔 수 없어 Auth USer의 NO값을 확인해야하는데,
+		//기술 침투를 막는건데 얘는 가만히 냅둬야..
 		//vo에 회원정보도 넣어줘야 겠지?.
 		//자기 자신의 정보를 넣기 위해.
+		//vo.setMemberName(authUser.getName()); 
 		vo.setMemberNo(authUser.getNo());
+		System.out.println("\nboard insert: gruop Id"+vo.getGroupNo());
 		boardService.insert(vo);
 		return"redirect:/board/list";
 	}
 	
-	@RequestMapping("/view")
-	public String view(@RequestParam("no") Long no,Model model){
+	@RequestMapping("/view/{no}")
+	public String view(@PathVariable("no")Long no,Model model){
 		BoardVo vo=boardService.getView(no);
 		model.addAttribute("board",vo);
 		return "/board/view";
 	}
 	//글 수정폼 요청.
+	@Auth
 	@RequestMapping("/modify")
 	public String modify(HttpSession session,@RequestParam("no") Long no ,Model model){
 		
@@ -71,7 +85,18 @@ public class BoardController {
 		model.addAttribute("board",vo);
 		return "/board/modify";
 	}
+	
+	
+	@Auth
+	@RequestMapping("/update")
+	public String update(@AuthUser UserVo authUser,@ModelAttribute BoardVo vo){
+		System.out.println(authUser);
+		vo.setMemberNo(authUser.getNo());
+		boardService.update(vo);
+		return "redirect:/board/list";
+	}
 	//글 수정 요청.
+	/*@Auth
 	@RequestMapping("/update")
 	public String update(HttpSession session,@ModelAttribute BoardVo vo){
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -84,8 +109,9 @@ public class BoardController {
 		boardService.update(vo);
 		return "redirect:/board/list";
 	}
-	@RequestMapping("/delete")
-	public String delete(HttpSession session,@RequestParam("no") Long no,@ModelAttribute BoardVo vo){
+	*/@Auth
+	@RequestMapping("/delete/{no}")
+	public String delete(HttpSession session,@PathVariable("no")Long no,@ModelAttribute BoardVo vo){
 		//로그인 사용자 체크
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null){
@@ -97,5 +123,29 @@ public class BoardController {
 		vo.setNo(no);
 		boardService.delete(vo);
 		return "redirect:/board/list";
+	}
+	
+	///////////relpy
+	@RequestMapping("/reply")
+	public String reply(HttpSession session,@RequestParam("no") Long no,Model model ){
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null){
+			return "redirect:/user/loginform";
+		}
+		BoardVo vo=boardService.getView(no);
+		model.addAttribute("board",vo);
+		
+		System.out.println("\ngroup no : "+vo.getGroupNo());
+		return "/board/write";
+		
+	}
+	///////////search
+	@RequestMapping("/search")
+	public String search(@RequestParam("kw")String kw,Model model){
+		System.out.println("\nKW"+kw);
+		Map<String,Object> list = boardService.getListByKeyword(kw);
+		model.addAttribute("list",list);
+		
+		return "/board/list";
 	}
 }
