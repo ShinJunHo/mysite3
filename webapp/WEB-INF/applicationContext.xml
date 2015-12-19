@@ -16,6 +16,11 @@
     http://www.springframework.org/schema/task
     http://www.springframework.org/schema/task/spring-task-3.0.xsd">
     
+    
+    
+    <!-- applicationContext와 spring-servlet에 두군데 설정해준다.
+        언제 어디서 호출될지 모르니깐. -->
+    <aop:aspectj-autoproxy/>
     <context:annotation-config />
     
     <context:component-scan base-package="com.hanains.mysite">

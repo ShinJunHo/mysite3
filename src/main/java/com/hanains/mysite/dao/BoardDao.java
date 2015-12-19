@@ -37,16 +37,14 @@ public class BoardDao {
 		List<BoardVo> list = sqlSession.selectList("board.list");
 		return list;
 	}
-	public List<BoardVo> getList(String kw){
-		List<BoardVo> list =sqlSession.selectList("board.listByKeyword",kw);
-		return list;
-	}
+
 	public List<BoardVo> getSelectList(Long page,String keyword){
-		Map<String,Object> map =new HashMap<String,Object>();
+		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("page",page);
 		map.put("keyword",keyword);
-		System.out.println("\nDAO\npage:"+page+"keyword:"+keyword);
+	
 		List<BoardVo> list =sqlSession.selectList("board.selectlist",map);
+		System.out.println("get Select list:"+list);
 		return list;
 	}
 	/*

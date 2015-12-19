@@ -3,6 +3,7 @@ package com.hanains.mysite.vo;
 public class BoardVo {
 	private Long no;
 	private String title;
+	private String fileName;
 	private String content;
 	private Long memberNo;
 	private String memberName;
@@ -22,6 +23,13 @@ public class BoardVo {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getContent() {
 		return content;
@@ -73,11 +81,11 @@ public class BoardVo {
 	}
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", content="
-				+ content + ", memberNo=" + memberNo + ", memberName="
-				+ memberName + ", viewCount=" + viewCount + ", groupNo="
-				+ groupNo + ", orderNo=" + orderNo + ", depth=" + depth
-				+ ", regDate=" + regDate + "]";
+		return "BoardVo [no=" + no + ", title=" + title + ", fileName="
+				+ fileName + ", content=" + content + ", memberNo=" + memberNo
+				+ ", memberName=" + memberName + ", viewCount=" + viewCount
+				+ ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth="
+				+ depth + ", regDate=" + regDate + "]";
 	}
 	
 	

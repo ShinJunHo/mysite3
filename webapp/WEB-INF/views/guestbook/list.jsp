@@ -18,6 +18,37 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet"
 	type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js "></script>
+<!-- 	
+<script type="text/javascript">
+	
+	$(function(){
+		$("#guestbook-enroll").click(function(){
+			var name = $("#name").val();
+			if(name==""){
+				alert("이름을 입력해주세요.");
+				$('#name').focus();
+				return false;
+			}
+			var password = $("#password").val();
+			if(password ==""){
+				alert("비밀번호를 입력해주세요.");
+				$("#password").focus();
+				return false;
+			}
+	
+		});
+		
+		
+	});	
+	</script>
+	 -->
+<c:if test="${param.result=='fail' }">
+	<script>
+		alert("빈칸을 채워주세요");
+	</script>
+</c:if>
+	
 </head>
 <body>
 	<div id="container">
@@ -31,16 +62,16 @@
 							<table>
 								<tr>
 									<td>이름</td>
-									<td><input type="text" name="name"
+									<td><input id="name" name="name" type="text" 
 										value="${authUser.name }"></td>
 									<td>비밀번호</td>
-									<td><input type="password" name="password"></td>
+									<td><input id="password" name="password" type="password" name="password"></td>
 								</tr>
 								<tr>
 									<td colspan=4><textarea name="message" id="content"></textarea></td>
 								</tr>
 								<tr>
-									<td colspan=4 align=right><input type="submit"
+									<td colspan=4 align=right><input id="guestbook-enroll" name="guestbook-enroll" type="submit"
 										VALUE=" 확인 "></td>
 								</tr>
 							</table>

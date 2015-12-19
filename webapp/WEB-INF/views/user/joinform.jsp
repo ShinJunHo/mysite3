@@ -21,6 +21,30 @@
 			$("image-checked").hide();
 		});
 		
+		$("#join-check").click(function(){
+			var name=$("#name").val();
+			if(name == ""){
+				alert("이름을 입력해주세요.");
+				$('#name').focus();
+				return false;
+			}
+			
+			var email=$("#email").val();
+			if(email==""){
+				alert("이메일을 입력해주세요.");
+				$('#email').focus();
+				return false;
+			}
+			
+			var password= $('#password').val();
+			if(password==""){
+				alert("비밀번호를 입력해주세요.");
+				$('password').focus();
+				return false;
+			}
+			
+		});
+		
 		//Jquery의 Main이라고 생각하면된다.
 		//console.log("jQuery!!")
 		$("#btn-checkemail").click(function(){
@@ -63,20 +87,9 @@
 				}
 			});
 		});
-		
-	
 	});
 	
-	
-	
-	
-	
-	
-	
-	
 	</script>
-	
-	
 </head>
 <body>
 	<div id="container">
@@ -88,14 +101,17 @@
 				<form id="join-form" name="joinForm" method="post"
 					action="${pageContext.request.contextPath}/user/join">
 					<input type="hidden" name="a" value="join"> 
+					
 					<label class="block-label" for="name">이름</label> 
 					<input id="name" name="name" type="text" value=""> 
+					
 					<label class="block-label" for="email">이메일</label> 
 					<input id="email" name="email" type="text" value=""> 
 					<img id="image-checked" src="${pageContext.request.contextPath}/assets/images/checked.png" style="width:12px; display:none">
 					<input id="btn-checkemail" type="button" value="id 중복체크">
+					
 					<label class="block-label">패스워드</label> 
-					<input name="password" type="password" value="">
+					<input id="password" name="password" type="password" value="">
 
 					<fieldset>
 						<legend>성별</legend>
@@ -110,7 +126,7 @@
 						<label>서비스 약관에 동의합니다.</label>
 					</fieldset>
 
-					<input type="submit" value="가입하기">
+					<input id="join-check" name="join-check" type="submit" value="가입하기">
 
 				</form>
 			</div>

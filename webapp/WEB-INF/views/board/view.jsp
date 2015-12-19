@@ -32,6 +32,12 @@
 						<td class="label">제목</td>
 						<td>${board.title }</td>
 					</tr>
+					<c:if test="${not empty board.fileName}">
+					<tr>
+						<td class="label">첨부파일</td>
+						<td><img src="${pageContext.request.contextPath}${board.fileName}" style="width:150px"></td>
+					</tr>
+					</c:if>
 					<tr>
 						<td class="label">내용</td>
 						<td>
@@ -46,9 +52,10 @@
 						<a href="${pageContext.request.contextPath}/board/reply?no=${board.no}">답글</a>
 					</c:if>
 					<a href="${pageContext.request.contextPath}/board/list">글목록</a> 
-					<c:if test="${not empty authUser }">
+					<c:if test="${board.memberNo == authUser.no }">
 						<a href="${pageContext.request.contextPath}/board/modify?no=${board.no}">글수정</a>
 					</c:if>
+					
 				</div>
 			</div>
 		</div>

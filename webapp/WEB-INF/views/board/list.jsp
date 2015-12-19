@@ -12,6 +12,13 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet"
 	type="text/css">
+	
+	<c:if test="${param.result == 'fail'}">
+	<script type="text/javascript">
+		alert("빈칸을 채워주세요.");
+	
+	</script>
+	</c:if>
 </head>
 <body>
 	<div id="container">
@@ -20,7 +27,7 @@
 				<div id="content">
 					<div id="board">
 						<form id="search_form" action="/mysite3/board/list" method="get">
-							<input type="text" id="keyword" name="keyword" value="${list.keyword }"> 
+							<input type="text" id="keyword" name="keyword" value="${keyword }"> 
 							<input type="submit" value="찾기">
 						</form>
 						<table class="tbl-ex">
@@ -61,14 +68,17 @@
 								
 								<ul>
 									<c:if test="${list.numPageGroup > 1}">
-										<li class="pg-prev"><a href="/mysite3/board/list?page=${(list.numPageGroup-2)*list.pageGroupSize+1}&keyword=''">◀ 이전</a></li>	
+										<li class="pg-prev"><a href="${pageContext.request.contextPath}/board/list?page=${(list.numPageGroup-2)*list.pageGroupSize+1}&keyword=${keyword}">◀ 이전</a></li>	
 									</c:if>
 									
+									
 									<c:forEach var="i" begin="${list.startPage}" end="${list.endPage}">
-										<li><a href="/mysite3/board/list?page=${i}&keyword=''">${i}</a></li>
+										<li><a href="/mysite3/board/list?page=${i}&keyword=${keyword}">${i}</a></li>
 									</c:forEach>
+									
+									
 									<c:if test="${list.numPageGroup < list.pageGroupCount }">
-										<li class="pg-next"><a href="/mysite3/board/list?page=${list.numPageGroup*list.pageGroupSize+1}&keyword=''">다음 ▶</a></li>
+										<li class="pg-next"><a href="/mysite3/board/list?page=${list.numPageGroup*list.pageGroupSize+1}&keyword=${keyword}">다음 ▶</a></li>
 									</c:if>
 								</ul>
 							</c:if>

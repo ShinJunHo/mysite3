@@ -9,13 +9,28 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js "></script>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			
+			
+		});
+	
+	
+	</script>
+
+
+
 </head>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/include/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/insert">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/insert" enctype="multipart/form-data">
 					<!-- hidden value가 원래는 write였음. -->
 					
 					<input type="hidden" name="groupNo" value="${board.groupNo}">
@@ -24,6 +39,7 @@
 					
 					
 					<input type= "hidden" name="memberNo" value="${authUser.no}">
+					
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -40,6 +56,9 @@
 						</tr>
 					</table>
 					<div class="bottom">
+						<label>업로드</label>
+						<!--  uploadFile안에 파일에 대한 정보가 다 들어있다. -->
+						<input type="file" name="uploadFile" accept="image/*"> 
 						<a href="${pageContext.request.contextPath}/board/list">취소</a>
 						<input type="submit" value="등록">
 					</div>

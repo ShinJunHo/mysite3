@@ -31,6 +31,9 @@ public class GuestbookController {
 	public String add(@ModelAttribute GuestBookVo vo){
 //		settter getter 할때는 파라미터 네임이 같아야 한다.
 		// jsp 의 name="값" 과 VO의 필드네임이 같아야 한다는 말이다.
+		if(vo.getMessage().trim().length()==0||vo.getName().trim().length()==0||vo.getPassword().trim().length()==0){
+			return "redirect:/guestbook/list?result=fail";
+		}
 		guestbookService.insert(vo);
 		return "redirect:/guestbook/list";
 	}

@@ -33,6 +33,7 @@ public class BoardService {
 		long pageGroupCount;
 		long numPageGroup;
 		
+		System.out.println("\ndao:"+list.size());
 		if( count > 0 ){
 			if (endRow > count){
 				endRow = count;
@@ -109,7 +110,7 @@ public class BoardService {
 				endRow = count;
 			}
 			//pagesize 넘기는 방법.
-			list = boardDao.getList(kw);
+		//	list = boardDao.getList(kw);
 		}else{
 			list =null;
 		}

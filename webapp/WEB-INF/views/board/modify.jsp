@@ -17,7 +17,7 @@
 		<c:import url="/WEB-INF/views/include/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/update">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/update"  enctype="multipart/form-data">
 					<input type= "hidden" name="member_no" value="${authUser.no}">
 					<input type= "hidden" name="no" value="${board.no}">
 					<table class="tbl-ex">
@@ -41,6 +41,9 @@
 						</tr>
 					</table>
 					<div class="bottom">
+						<label>업로드</label>
+						<!--  uploadFile안에 파일에 대한 정보가 다 들어있다. -->
+						<input type="file" name="uploadFile" accept="image/*"> 
 						<a href="${pageContext.request.contextPath}/board/list">취소</a> <input type="submit"
 							value="수정">
 					</div>
